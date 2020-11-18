@@ -1,7 +1,0 @@
-Compilation Beans :_>>>
-
-javac -classpath c:/tomcat9/lib/*;c:/tomcat9/webapps/styletwo/WEB-INF/classes;. *.java
-
-Compilation servlets and Beans and tags :_>>>
-
-javac -classpath c:/tomcat9/lib/*;c:/tomcat9/webapps/styletwo/WEB-INF/lib/*;c:/tomcat9/webapps/styletwo/WEB-INF/classes;. *.java
