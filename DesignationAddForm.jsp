@@ -49,7 +49,7 @@ setLeftBar("Designation");
 </script>
 <h1>Designation (Add Module)</h1>
 <span id='titleErrorSection' class='error'></span>
-<form action="/stylethree/Notification.jsp" onsubmit='return addDesignation(this)'>
+<form action="/stylethree/DesignationAddNotification.jsp" onsubmit='return addDesignation(this)'>
 <br><label>Designation</label><br>
 <input type='text' id='title' name='title' maxlength='35' size='36'>
 <br><br>
