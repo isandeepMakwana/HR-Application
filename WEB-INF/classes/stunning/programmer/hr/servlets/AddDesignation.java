@@ -19,7 +19,7 @@ try
 designationDAO.add(designationDTO);
 pw= response.getWriter();
 response.setContentType("text/plain");
-pw.println("Designation added .");
+pw.println("Designation added");
 }
 catch(DAOException daoException)
 {

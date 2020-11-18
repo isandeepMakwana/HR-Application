@@ -3,6 +3,7 @@ import stunning.programmer.hr.dl.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
+import java.util.*;
 public class Designations extends HttpServlet
 {
 public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -13,8 +14,9 @@ try
 {
 PrintWriter pw = response.getWriter();
 response.setContentType("text/plain");
+try{
 List<DesignationDTO> designations=designationDAO.getAll();
-int i;
+int i=0;
 for(DesignationDTO designation:designations)
 {
 i++;
@@ -23,7 +25,11 @@ pw.println();
 }
 catch(DAOException daoException)
 {
-//done done 
+System.out.println(daoException);
+}
+}catch(IOException ioException)
+{
+// nothing
 }
 }
 public void doPost(HttpServletRequest request ,HttpServletResponse response)
