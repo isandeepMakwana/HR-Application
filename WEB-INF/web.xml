@@ -38,4 +38,13 @@ Style Three
 <url-pattern>/addDesignation</url-pattern>
 </servlet-mapping>
 
+
+<servlet>
+<servlet-name>Designations</servlet-name>
+<servlet-class>stunning.programmer.hr.servlets.Designations</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>Designations</servlet-name>
+<url-pattern>/designations</url-pattern>
+</servlet-mapping>
 </web-app>

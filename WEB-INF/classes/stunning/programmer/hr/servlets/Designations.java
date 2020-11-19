@@ -20,7 +20,8 @@ int i=0;
 for(DesignationDTO designation:designations)
 {
 i++;
-pw.println();
+pw.println(designation.getCode()+","+designation.getTitle());
+if(i<designations.size())pw.println(",");
 }
 }
 catch(DAOException daoException)
@@ -38,7 +39,10 @@ try
 {
 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 }
-catch(Exception exception){}
+catch(Exception exception)
+{
+
+}
 }
 
 }
