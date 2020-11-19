@@ -7,8 +7,51 @@ removeATag=document.querySelector(".content-left-panel a");
 document.querySelector(".content-left-panel").replaceChild(designation, removeATag);
 document.querySelector(".content-left-panel p2").style.fontWeight=1000;
 }
+function getAll()
+{
+var designationGridTableBody=document.querySelectorAll("tbody")[0];
+var designationGridTableBodyRowTemplate = designationGridTableBody.querySelectorAll("tr")[0];
+// remove the ROW from DOM(Document object Model)
+designationGridTableBodyRowTemplate.remove();
+var designationGridTableColumnsTemplateCollection=designationGridTableBodyRowTemplate.getElementsByTagName("td");
+var xmlHttpRequest = new XMLHttpRequest();
+xmlHttpRequest.onreadystatechange=function()
+{
+if(this.readyState==4){
+if(this.status==200){
+var responseData = this.responseText;
+var splits=responseData.split(",");
+var cellTemplate;
+var k;
+var dynamicRow;
+var dynamicRowCells;
+var placeHolderFor;
+for (k=0;k<splits.length;k+=2)
+{
+dynamicRow= designationGridTableBodyRowTemplate.cloneNode(true);
+designationGridTableBody.appendChild(dynamicRow);
+dynamicRowCells=dynamicRow.getElementsByTagName("td");
+for(var i=0;i<dynamicRowCells.length;i++)
+{
+cellTemplate=dynamicRowCells[i];
+placeHolderFor=cellTemplate.getAttribute("placeHolder");
+if(placeHolderFor==null) continue;
+if(placeHolderFor=="serialNumberPlaceHolder")cellTemplate.innerHTML=((k/2)+1)+".";
+if(placeHolderFor=="designation")cellTemplate.innerHTML=splits[k+1];
+if(placeHolderFor=="editOption")cellTemplate.innerHTML="<a href='/stylethree/editDesignation?code="+splits[k]+"'>Edit</a>";
+if(placeHolderFor=="deleteOption")cellTemplate.innerHTML="<a href='/styletwo/confirmDeleteDesignation?code="+splits[k]+"'>Delete</a>";
+}
+}//loop ends
+}
+}
+}
+xmlHttpRequest.open('GET','designations',true);
+xmlHttpRequest.send();
+}
 setLeftBar("Designation");
+window.addEventListener('load',getAll);
 </script>
+<div class='content-right-panel-table'>
 <h2>Designation</h2>
 <table border='1' class="designation-table">
 <thead>
@@ -26,11 +69,12 @@ setLeftBar("Designation");
 </thead>
 <tbody>
 <tr>
-<td style='text-align:right' placeHolder='serialNumber'>1.</td>
-<td placeHolder='Designation'>Administration</td>
-<td style='text-align:center' palceHolder='editOption'><a href='/styletwo/editDesignation?code=22'>Edit</a></td>
-<td style='text-align:center' palceHolder='deleteOption'><a href='/styletwo/confirmDeleteDesignation?code=22'>Delete</a></td>
+<td style='text-align:right' placeHolder='serialNumberPlaceHolder'></td>
+<td placeHolder='designation'></td>
+<td style='text-align:center' placeHolder='editOption'></td>
+<td style='text-align:center' placeHolder='deleteOption'></td>
 </tr>
 </tbody>
 </table>
+</div>
 <jsp:include page='/MasterPageBottomSection.jsp' />

@@ -1,0 +1,30 @@
+function populateDesignationGridTable()
+{
+var designationGridTableBody=document.querySelector("tbody")[0];
+var designationGridTableBodyRowTemplate = designationGridTableBody.getElementsByTagName("tr")[0];
+// remove the ROW from DOM(Document object Model)
+designationTableBodyRowTemplate.remove();
+var designationGridTableColumnsTemplateCollection=designationGridTableBodyRowTemplate.getElementsByTagName("td");
+var cellTemplate;
+var k;
+var dynamicRow;
+var dynamicRowCells;
+var placeHolderFor;
+for (k=0;k<.length;k++)
+{
+dynamicRow= designationGridTableBodyRowTemplate.cloneNode(true);
+designationGridTableBody.appendChild(dynamicRow);
+dynamicRowCells=dynamicRow.getElementsByTagName("td");
+for(var i=0;i<dynamicRowCells.length;i++)
+{
+cellTemplate=dynamicRowCells[i];
+placeHolderFor=cellTemplate.getAttribute("placeHolder");
+if(placeHolderFor==null) continue;
+if(placeHolderFor=="serialNumberPlaceHolder")cellTemplate.innerHTML=(i+1)+".";
+if(placeHolderFor=="designation")cellTemplate.innerHTML=employees[k].designation;
+if(placeHolderFor=="editOption")cellTemplate.innerHTML="<a href='/stylethree/editDesignation?code="+code[i]+"'>Edit</a>";
+if(placeHolderFor=="deleteOption")cellTemplate.innerHTML="<a href='/styletwo/confirmDeleteDesignation?code="+code[i]+"'>Delete</a>";
+}
+}// employees population loop ends
+}
+window.addEventListener('load',populateDesignationGridTable);

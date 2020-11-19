@@ -20,8 +20,8 @@ int i=0;
 for(DesignationDTO designation:designations)
 {
 i++;
-pw.println(designation.getCode()+","+designation.getTitle());
-if(i<designations.size())pw.println(",");
+pw.print(designation.getCode()+","+designation.getTitle());
+if(i<designations.size())pw.print(",");
 }
 }
 catch(DAOException daoException)
