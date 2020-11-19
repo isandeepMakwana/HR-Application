@@ -39,7 +39,7 @@ if(placeHolderFor==null) continue;
 if(placeHolderFor=="serialNumberPlaceHolder")cellTemplate.innerHTML=((k/2)+1)+".";
 if(placeHolderFor=="designation")cellTemplate.innerHTML=splits[k+1];
 if(placeHolderFor=="editOption")cellTemplate.innerHTML="<a href='/stylethree/editDesignation?code="+splits[k]+"'>Edit</a>";
-if(placeHolderFor=="deleteOption")cellTemplate.innerHTML="<a href='/styletwo/confirmDeleteDesignation?code="+splits[k]+"'>Delete</a>";
+if(placeHolderFor=="deleteOption")cellTemplate.innerHTML="<a href='/stylethree/confirmDeleteDesignation?code="+splits[k]+"'>Delete</a>";
 }
 }//loop ends
 }
