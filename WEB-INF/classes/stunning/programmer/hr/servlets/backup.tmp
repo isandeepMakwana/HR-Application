@@ -1,0 +1,21 @@
+try
+{
+PrintWriter pw= null;
+try
+{
+employeeDAO.add(employeeDTO);
+pw= response.getWriter();
+response.setContentType("text/plain");
+pw.println("Employee added");
+}
+catch(DAOException daoException)
+{
+pw = response.getWriter();
+response.setContentType("text/plain");
+pw.println(daoException.getMessage());
+}
+}
+catch(Exception exception)
+{
+System.out.println(exception);
+}
