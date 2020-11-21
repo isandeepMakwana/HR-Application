@@ -75,8 +75,6 @@ if (firstInvalidComponent==null)firstInvalidComponent=frm.basicSalary;
 }
 }
 }
-
-
 var panNumber=frm.panNumber.value.trim();
 var panNumberErrorSection=document.getElementById('panNumberErrorSection');
 panNumberErrorSection.innerHTML='';
@@ -93,7 +91,6 @@ aadharCardNumberErrorSection.innerHTML='Aadhar Card Number is required';
 valid=false;
 if (firstInvalidComponent==null)firstInvalidComponent=frm.aadharCardNumber;
 }
-
 if(!valid) firstInvalidComponent.focus();
 return valid;
 }
