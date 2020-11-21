@@ -94,6 +94,32 @@ if (firstInvalidComponent==null)firstInvalidComponent=frm.aadharCardNumber;
 if(!valid) firstInvalidComponent.focus();
 return valid;
 }
-function CencelAddition(){
-document.getElementById('cancelAdditionForm').submit();
+alert("working");
+if(valid)
+{
+alert("working")
+var xmlHttpRequest=new XMLHttpRequest();
+xmlHttpRequest.onreadystatechange=function()
+{
+if(this.readyState==4)
+{
+if(this.status==200)
+{
+var responseData = this.responseText;
+alert(responseData);
+}
+}
+}
+var dataToSend="name?"+encodeURI(name);
+dataToSend=dataToSend+"designation?"+encodeURI(designation;
+dataToSend=dataToSend+"&dateOfBirth?"+encodeURI(dateOfBirth);
+dataToSend=dataToSend+"&gender?"+encodeURI(gender);
+dataToSend=dataToSend+"&isIndian?"+encodeURI(isIndian);
+dataToSend=dataToSend+"&basicSalary?"+encodeURI(basicSalary);
+dataToSend=dataToSend+"&panNumber?"+encodeURI(panNumber);
+dataToSend=dataToSend+"&aadharCardNumber?"+encodeURI(aadharCardNumber;
+xmlHttpRequest.open('POST','addEmployee',true)
+xmlHttpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+xmlHttpRequest.send(dataToSend);
+return false;
 }
