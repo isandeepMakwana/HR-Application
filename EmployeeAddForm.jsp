@@ -1,6 +1,7 @@
 ﻿<jsp:include page='/MasterPageTopSection.jsp' />
-<script src='/stylethree/js/EmployeeAddForm.js'></script>
 <form id='cancelAdditionForm' action='/stylethree/Employees.jsp' >
+</form>
+<form id='submitAdditionForm' action='/stylethree/AddEmployeeNotification.jsp'>
 </form>
 <script>
 function setLeftBar(text){
@@ -10,6 +11,7 @@ removeATag=document.querySelectorAll(".content-left-panel a")[1];
 document.querySelector(".content-left-panel").replaceChild(designation, removeATag);
 document.querySelector(".content-left-panel p2").style.fontWeight=1000;
 }
+
 function populateDesignations()
 {
 var xmlHttpRequest=new XMLHttpRequest();
@@ -34,12 +36,162 @@ designationComboBox.appendChild(obj);
 xmlHttpRequest.open('GET','designations',true)
 xmlHttpRequest.send();
 }
+setLeftBar("Employees");
+function CencelAddition(){
+document.getElementById('cancelAdditionForm').submit();
+}
+function SubmitAddition(){
+document.getElementById('submitAdditionForm').submit();
+}
 
 window.addEventListener('load',populateDesignations);
-setLeftBar("Employees");
+function valid(){
+found =true;
+var nameErrorSection=document.getElementById('nameErrorSection');
+nameErrorSection.innerHTML='';
+var name=document.getElementById('name').value;
+if(name==null|| name.length==0){
+found=false;
+nameErrorSection.innerHTML='Name required';
+}
+var designationCode=document.getElementById('designationCode').value;
+var designationCodeErrorSection=document.getElementById('designationCodeErrorSection');
+designationCodeErrorSection.innerHTML='';
+if (designationCode==-1) 
+{
+found=false;
+designationCodeErrorSection.innerHTML='Select designations';
+}
+var dateOfBirth=document.getElementById('dateOfBirth').value;
+var dateOfBirthErrorSection=document.getElementById('dateOfBirthErrorSection');
+dateOfBirthErrorSection.innerHTML='';
+if (dateOfBirth.length==0) 
+{found=false;
+dateOfBirthErrorSection.innerHTML='Please enter date of birth';
+}
+var male=document.getElementById('male').checked;
+var female=document.getElementById('female').checked;
+var genderErrorSection=document.getElementById('genderErrorSection');
+genderErrorSection.innerHTML='';
+if(male==false && female==false)
+{found=false;
+genderErrorSection.innerHTML=' Please select gender';
+}
+var isIndian=document.getElementById('isIndian').value;
+var basicSalary=document.getElementById('basicSalary').value;
+var basicSalaryErrorSection=document.getElementById('basicSalaryErrorSection');
+basicSalaryErrorSection.innerHTML='';
+if(basicSalary==0)
+{found=false;
+basicSalaryErrorSection.innerHTML='Basic Salary required';
+}
+else
+{
+var v='0123456789.';
+var e=0;
+isBasicSalaryValid=true;
+while(e<basicSalary.length)
+{
+if(v.indexOf(basicSalary.charAt(e))==-1)
+{
+basicSalaryErrorSection.innerHTML='Invalid basic salary';
+isBasicSalaryValid=false;
+	break;
+found=false;
+}e++;
+}
+if(isBasicSalaryValid)
+{
+var dot=basicSalary.indexOf('.');
+if (dot!=-1)
+{
+var numberofFranctions=basicSalary.length-(dot+1);
+if(numberofFranctions>2)
+{
+basicSalaryErrorSection.innerHTML='Invalid basic salary';
+found=false;
+}
+}
+}
+}
+var panNumber=document.getElementById('panNumber').value;
+var panNumberErrorSection=document.getElementById('panNumberErrorSection');
+panNumberErrorSection.innerHTML='';
+if(panNumber.length==0)
+{
+found=false;
+panNumberErrorSection.innerHTML='PAN number is required';
+}
+var aadharCardNumber=document.getElementById('aadharCardNumber').value;
+var panNumberErrorSection=document.getElementById('aadharCardNumberErrorSection');
+aadharCardNumberErrorSection.innerHTML='';
+if(aadharCardNumber.length==0){found=false;
+aadharCardNumberErrorSection.innerHTML='Aadhar Card Number is required';
+}
+
+if(found==true)
+{
+var dataToSend="name="+encodeURI(name);
+dataToSend=dataToSend+"&designationCode="+encodeURI(designationCode);
+dataToSend=dataToSend+"&dateOfBirth="+encodeURI(dateOfBirth);
+var gender;
+if(male)
+{
+gender='M';
+}
+else{
+gender='F';
+}
+dataToSend=dataToSend+"&gender="+encodeURI(gender);
+if(isIndian=='on')
+{
+isIndian=true;
+}
+else
+{
+isIndian=false
+}
+dataToSend=dataToSend+"&isIndian="+encodeURI(isIndian);
+dataToSend=dataToSend+"&basicSalary="+encodeURI(basicSalary);
+dataToSend=dataToSend+"&panNumber="+encodeURI(panNumber);
+dataToSend=dataToSend+"&aadharCardNumber="+encodeURI(aadharCardNumber);
+var xmlHttpRequest=new XMLHttpRequest();
+xmlHttpRequest.onreadystatechange=function(){
+if(this.readyState==4){
+if(this.status==200){
+var responseData=this.responseText;
+if(responseData.trim()=='Employee added')
+{
+SubmitAddition();
+}
+
+//alert(responseData);
+var splits=responseData.split(",");
+if(splits[0].trim()!='panNumber' && splits[0].trim()=='aadharCardNumber')
+{
+aadharCardNumberErrorSection.innerHTML='Aadhar Card Number is exists';
+}
+if(splits[0].trim()=='panNumber' && splits[0].trim()!='aadharCardNumber')
+{
+panNumberErrorSection=document.getElementById('panNumberErrorSection');
+panNumberErrorSection.innerHTML='PAN number is exists';
+}
+if(splits[0].trim()=='both')
+{
+panNumberErrorSection=document.getElementById('panNumberErrorSection');
+panNumberErrorSection.innerHTML='PAN number is exists';
+aadharCardNumberErrorSection.innerHTML='Aadhar Card Number is exists';
+}
+}
+}
+}
+xmlHttpRequest.open('POST','addEmployee',true)
+xmlHttpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+xmlHttpRequest.send(dataToSend);
+}
+}
 </script>
 <h2>Employee (Add Module)</h2>
-<form method='post' action='/stylethree/AddEmployee.jsp' onsubmit='return validateFrom(this)'>
 <table>
 <tr>
 <td>Name</td>
@@ -91,8 +243,7 @@ setLeftBar("Employees");
 </tr>
 <tr>
 <td colsan='2'>
-<button type='submit'>Add</button>&nbsp;&nbsp;<button type='Button' onclick='CencelAddition()'>Cancel</button></td>
+<button type='button' onclick='valid()'>Add</button>&nbsp;&nbsp;<button type='Button' onclick='CencelAddition()'>Cancel</button></td>
 </tr>
 </table>
-</form>
 <jsp:include page='/MasterPageBottomSection.jsp' />
