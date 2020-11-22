@@ -94,6 +94,26 @@ Style Three
 <url-pattern>/addEmployee</url-pattern>
 </servlet-mapping>
 
+<servlet>
+<servlet-name>Employees</servlet-name>
+<servlet-class>stunning.programmer.hr.servlets.Employees</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>Employees</servlet-name>
+<url-pattern>/employees</url-pattern>
+</servlet-mapping>
+
+
+<servlet>
+<servlet-name>ConfirmDeleteEmployee</servlet-name>
+<servlet-class>stunning.programmer.hr.servlets.ConfirmDeleteEmployee</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>ConfirmDeleteEmployee</servlet-name>
+<url-pattern>/confirmDeleteEmployee</url-pattern>
+</servlet-mapping>
+
+
 
 </web-app>
 
