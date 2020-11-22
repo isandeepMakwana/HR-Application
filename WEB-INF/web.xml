@@ -113,6 +113,14 @@ Style Three
 <url-pattern>/confirmDeleteEmployee</url-pattern>
 </servlet-mapping>
 
+<servlet>
+<servlet-name>DeleteEmployee</servlet-name>
+<servlet-class>stunning.programmer.hr.servlets.DeleteEmployee</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>DeleteEmployee</servlet-name>
+<url-pattern>/deleteEmployee</url-pattern>
+</servlet-mapping>
 
 
 </web-app>
