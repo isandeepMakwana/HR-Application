@@ -1,30 +1,128 @@
-function populateDesignationGridTable()
+function setLeftBar(text){
+var designation = document.createElement("p2");
+designation.innerHTML=text;
+removeATag=document.querySelectorAll(".content-left-panel a")[1];
+document.querySelector(".content-left-panel").replaceChild(designation, removeATag);
+document.querySelector(".content-left-panel p2").style.fontWeight=1000;
+}
+function arrary()
 {
-var designationGridTableBody=document.querySelector("tbody")[0];
-var designationGridTableBodyRowTemplate = designationGridTableBody.getElementsByTagName("tr")[0];
+function Employee(){
+this.employeeId='';
+this.name='';
+this.designationCode=0;
+this.dataOfBirth='';
+this.gender='';
+this.IsIdian=true;
+this.basicSalary=0;
+this.panNumber='';
+this.aadharCardNumber='';
+}
+var selectedRow=null;
+var employees=[];
+function selectEmployee(row, employeeId)
+{
+if(row==selectedRow)return;
+if(selectedRow!=null)
+{
+selectedRow.style.background='white';
+selectedRow.style.color='black';
+}
+row.style.background='#7C7B7B';
+row.style.color='white';
+selectedRow=row;
+var i;
+for(i=0; i<employees.length;i++)
+{
+if(employees[i].employeeId==employeeId)
+{
+break;
+}
+}
+var emp=employees[i];
+document.getElementById('detailPanel_employeeId').innerHTML=emp.employeeId;
+document.getElementById('detailPanel_name').innerHTML=emp.name;
+document.getElementById('detailPanel_designation').innerHTML=emp.designation;
+document.getElementById('detailPanel_dateOfBirth').innerHTML=emp.dateOfBirth;
+document.getElementById('detailPanel_gender').innerHTML=emp.gender;
+if(emp.isIndian){
+document.getElementById('detailPanel_isIndian').innerHTML='Yes';
+}
+else
+{
+document.getElementById('detailPanel_isIdian').innerHTML='NO';
+}
+document.getElementById('detailPanel_basicSalary').innerHTML=emp.basicSalary;
+document.getElementById('detailPanel_panNumber').innerHTML=emp.panNumber;
+document.getElementById('detailPanel_aadharCardNumber').innerHTML=emp.aadharCardNumber;
+}
+function createDynamicRowClickHandler(rowAddress,employeeId)
+{
+return function()
+{
+selectEmployee(rowAddress,employeeId);
+};
+}
+
+var employeesGridTable = document.getElementById("employeesGridTable");
+var employeesGridTableBody= employeesGridTable.getElementsByTagName("tbody")[0];
+var employeesGridTableBodyRowTemplate = employeesGridTableBody.getElementsByTagName("tr")[0];
 // remove the ROW from DOM(Document object Model)
-designationTableBodyRowTemplate.remove();
-var designationGridTableColumnsTemplateCollection=designationGridTableBodyRowTemplate.getElementsByTagName("td");
+employeesGridTableBodyRowTemplate.remove();
+var employeesGridTableColumnsTemplateCollection=employeesGridTableBodyRowTemplate.getElementsByTagName("td");
 var cellTemplate;
 var k;
 var dynamicRow;
 var dynamicRowCells;
 var placeHolderFor;
-for (k=0;k<.length;k++)
+for (k=0;k<employees.length;k++)
 {
-dynamicRow= designationGridTableBodyRowTemplate.cloneNode(true);
-designationGridTableBody.appendChild(dynamicRow);
+dynamicRow= employeesGridTableBodyRowTemplate.cloneNode(true);
+employeesGridTableBody.appendChild(dynamicRow);
 dynamicRowCells=dynamicRow.getElementsByTagName("td");
 for(var i=0;i<dynamicRowCells.length;i++)
 {
 cellTemplate=dynamicRowCells[i];
-placeHolderFor=cellTemplate.getAttribute("placeHolder");
+placeHolderFor=cellTemplate.getAttribute("placeHolderId");
 if(placeHolderFor==null) continue;
-if(placeHolderFor=="serialNumberPlaceHolder")cellTemplate.innerHTML=(i+1)+".";
+if(placeHolderFor=="serialNumberPlaceHolder")cellTemplate.innerHTML=(k+1)+".";
+if(placeHolderFor=="employeeId")cellTemplate.innerHTML=employees[k].employeeId;
+if(placeHolderFor=="name")cellTemplate.innerHTML=employees[k].name;
+if(placeHolderFor=="designationCode")cellTemplate.innerHTML=employees[k].designationCode;
 if(placeHolderFor=="designation")cellTemplate.innerHTML=employees[k].designation;
-if(placeHolderFor=="editOption")cellTemplate.innerHTML="<a href='/stylethree/editDesignation?code="+code[i]+"'>Edit</a>";
-if(placeHolderFor=="deleteOption")cellTemplate.innerHTML="<a href='/styletwo/confirmDeleteDesignation?code="+code[i]+"'>Delete</a>";
+if(placeHolderFor=="dateOfBirth")cellTemplate.innerHTML=employees[k].dateOfBirth;
+if(placeHolderFor=="isIndian")cellTemplate.innerHTML=employees[k].isIndian;
+if(placeHolderFor=="basicSalary")cellTemplate.innerHTML=employees[k].basicSalary;
+if(placeHolderFor=="panNumber")cellTemplate.innerHTML=employees[k].panNumber;
+if(placeHolderFor=="aadharCardNumber")cellTemplate.innerHTML=employees[k].aadharCardNumber;
+if(placeHolderFor=="editOption")cellTemplate.innerHTML="<a href='/styletwo/editEmployee?employeeId="+employees[k].employeeId+"'>Edit</a>";
+if(placeHolderFor=="deleteOption")cellTemplate.innerHTML="<a href='/styletwo/confirmDeleteEmployee?employeeId="+employees[k].employeeId+"'>Delete</a>";
 }
+dynamicRow.onclick=createDynamicRowClickHandler(dynamicRow,employees[k].employeeId);
 }// employees population loop ends
+
+
+alert(responseData);
+var splits=responseData.split(",");
+var employee;
+var i=0;
+var j=0;
+for(i=0;splits.length>i;i+=10)
+{
+employee = new Employee();
+employee.employeeId= splits[i];
+employee.name=splits[i+1];
+employee.designationCode=splits[i+2];
+employee.designation=splits[i+3];
+employee.dateOfBirth=splits[i+4];
+employee.gender=splits[i+5];
+employee.isIndian=splits[i+6];
+employee.basicSalary=splits[i+7];
+employee.panNumber=splits[i+8];
+employee.aadharCardNumber=splits[i+9];
+employees[j]=employee;
+j++;
 }
-window.addEventListener('load',populateDesignationGridTable);
+}
+window.addEventListener('load',populateEmployeesGridTable);
+setLeftBar("Employees");
