@@ -30,9 +30,9 @@ requestDispatcher=request.getRequestDispatcher("/Designations.jsp");
 requestDispatcher.forward(request,response);
 }
 String title=designationDTO.getTitle();
-HttpSession httpSession = request.getSession();
-httpSession.setAttribute("code",code);
-httpSession.setAttribute("title",title);
+HttpSession session=request.getSession();
+session.setAttribute("code", code);
+session.setAttribute("title", title);
 RequestDispatcher requestDispatcher;
 requestDispatcher=request.getRequestDispatcher("/DesignationEditForm.jsp");
 requestDispatcher.forward(request,response);

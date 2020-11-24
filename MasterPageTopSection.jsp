@@ -4,6 +4,18 @@
 <link rel='stylesheet' type='text/css' href='/styletwo/css/styles.css'>
 </head>
 <body>
+<form method="post" id="Invalid" action='/stylethree/LoginForm.jsp'></form>
+<input type='hidden' id='username' value='${username}'>
+<script>
+function back(){
+var username=document.getElementById("username").value;
+if(username.trim()=='null'||username.length==0)
+{
+document.getElementById("Invalid").submit();
+}
+}
+back();
+</script>
 <!-- main container starts here -->
 <div class='main-container'>
 <!-- header starts here -->
@@ -12,7 +24,7 @@
 <div class='brand-name'>&nbsp;&nbsp; Stunning Programmer 
 <div class='username'>
 <img src='/stylethree/images/userlogo.jpg'  style="width:30px;height:30px;">
-[Not set] <a href='/styletwo/logout' style='text-decoration:none'>logout</a></div>
+${username}<a href='/stylethree/logout' style='text-decoration:none'>&nbsp;&nbsp;logout</a></div>
 </div>
 </div>
 <!-- header ends here -->
@@ -28,3 +40,4 @@
 <!-- left panel ends here -->
 <!-- right panel starts here -->
 <div class='content-right-panel'>
+

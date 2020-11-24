@@ -7,6 +7,9 @@ public class UpdateDesignation extends HttpServlet
 {
 public void doGet(HttpServletRequest request, HttpServletResponse response)
 {
+HttpSession session = request.getSession();
+session.removeAttribute("code");
+session.removeAttribute("title");
 String title = request.getParameter("title");
 int code=Integer.parseInt(request.getParameter("code"));
 DesignationDAO designationDAO = new DesignationDAO();

@@ -2,31 +2,34 @@ package stunning.programmer.hr.servlets;
 import stunning.programmer.hr.dl.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import java.math.*;
-import java.util.*;
-import java.text.*;
 import java.io.*;
-public class Employees extends HttpServlet
+public class DeleteEmployee extends HttpServlet
 {
 public void doGet(HttpServletRequest request, HttpServletResponse response)
 {
-EmployeeDAO employeeDAO = new EmployeeDAO();
+HttpSession session = request.getSession();
+session.removeAttribute("employeeId");
+session.removeAttribute("name");
+session.removeAttribute("designationCode");
+session.removeAttribute("designation");
+session.removeAttribute("dateOfBirth");
+session.removeAttribute("gender");
+session.removeAttribute("isIndian");
+session.removeAttribute("basicSalary");
+session.removeAttribute("panNumber");
+session.removeAttribute("aadharCardNumber");
+String employeeId=request.getParameter("employeeId");
+EmployeeDAO employeeDAO;
+employeeDAO = new EmployeeDAO();
 try
 {
 PrintWriter pw= null;
-List<EmployeeDTO> list=null;
 try
 {
-list=employeeDAO.getAll();
+employeeDAO.DeleteByEmployeeId(employeeId);
 pw= response.getWriter();
 response.setContentType("text/plain");
-int i=0;
-for(EmployeeDTO employeeDTO:list)
-{
-i++;
-pw.print(employeeDTO.getEmployeeId()+","+employeeDTO.getName()+","+employeeDTO.getDesignationCode()+","+employeeDTO.getDesignation()+","+employeeDTO.getDateOfBirth()+","+employeeDTO.getGender()+","+employeeDTO.getIsIndian()+","+employeeDTO.getBasicSalary()+","+employeeDTO.getPANNumber()+","+employeeDTO.getAadharCardNumber());
-if(i<list.size()) pw.print(",");
-}
+pw.println("Employee deleted");
 }
 catch(DAOException daoException)
 {
@@ -48,4 +51,5 @@ response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 }
 catch(Exception exception){}
 }
+
 }

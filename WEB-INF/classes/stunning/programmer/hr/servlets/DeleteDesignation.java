@@ -7,6 +7,9 @@ public class DeleteDesignation extends HttpServlet
 {
 public void doGet(HttpServletRequest request, HttpServletResponse response)
 {
+HttpSession session = request.getSession();
+session.removeAttribute("code");
+session.removeAttribute("title");
 int code =0;
 code =Integer.parseInt(request.getParameter("code"));
 DesignationDAO designationDAO = new DesignationDAO();
